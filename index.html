@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CORS Test</title>
+</head>
+<body>
+  <h1>Probando CORS con NestJS + GraphQL</h1>
+  <pre id="result">Cargando...</pre>
+
+  <script>
+    const resultElement = document.getElementById('result');
+
+    fetch("http://localhost:4000/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include", // si usas cookies o autenticación
+      body: JSON.stringify({
+        query: "getUser{id, firstName }" // cambia esto por una query válida en tu esquema
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      resultElement.textContent = JSON.stringify(data, null, 2);
+    })
+    .catch(err => {
+      resultElement.textContent = "❌ Error CORS: " + err;
+    });
+  </script>
+</body>
+</html>
